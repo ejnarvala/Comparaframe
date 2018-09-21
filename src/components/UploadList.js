@@ -5,13 +5,14 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Image from '@material-ui/icons/Image';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper'
 import AddCircle from '@material-ui/icons/AddCircle'
 import Input from '@material-ui/core/Input';
 import Lightbox from 'react-images';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 
 
 class UploadList extends Component {
@@ -102,7 +103,7 @@ class UploadList extends Component {
 				var url = URL.createObjectURL(file);
 				images.push({
 					src: url,
-					caption: file.name,
+					caption: file.name.split('.')[0],
 					filepath: file.name
 				});
 				// console.log(images);
@@ -117,7 +118,6 @@ class UploadList extends Component {
 
 	}
 
-
 	render(){
 		return(
 		<div>
@@ -125,15 +125,11 @@ class UploadList extends Component {
 			<List>
 				{this.state.images.map((image, idx) => (
 					<ListItem divider key={idx}>
-						<ListItemIcon>
-							<Image/>
-						</ListItemIcon>
+						<Avatar src={image.src}/>
 
-						<ListItemText >
+						<ListItemText disableTypography>
 							<Input defaultValue={image.caption} name={idx.toString()} onBlur={this.handleLabelChange}/>
-						</ListItemText>
-
-						<ListItemText style={{textAlign: "right"}} primary={image.filepath}>
+							<Typography paragraph variant="body2">{image.filepath}</Typography>
 						</ListItemText>
 
 						<ListItemSecondaryAction name={idx.toString()} onClick={this.handleDeleteClick}>
