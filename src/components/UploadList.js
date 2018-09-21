@@ -96,20 +96,25 @@ class UploadList extends Component {
 		var fileList = event.target.files;
 		// console.log(fileList);
 		var images = this.state.images;
-		for(let i = 0; i < fileList.length; i++){
-			var file = fileList[i]
-			var url = URL.createObjectURL(file);
-			images.push({
-				src: url,
-				caption: file.name,
-				filepath: file.name
+		if(images.length < 10){
+			for(let i = 0; i < fileList.length; i++){
+				var file = fileList[i]
+				var url = URL.createObjectURL(file);
+				images.push({
+					src: url,
+					caption: file.name,
+					filepath: file.name
+				});
+				// console.log(images);
+			}
+			event.target.value = '';
+			this.setState({
+				images: images,
 			});
-			// console.log(images);
+		}else{
+			console.log('too many images!');
 		}
-		event.target.value = '';
-		this.setState({
-			images: images,
-		});
+
 	}
 
 
