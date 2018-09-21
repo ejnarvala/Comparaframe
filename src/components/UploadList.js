@@ -14,11 +14,16 @@ import Divider from '@material-ui/core/Divider';
 import AddCircle from '@material-ui/icons/AddCircle'
 import Input from '@material-ui/core/Input';
 import Lightbox from 'react-images';
+import Button from '@material-ui/core/Button';
+
 
 class UploadList extends Component {
 	state = {
 		images: [],
-		imageSources: []
+		lightboxIsOpen: false,
+		currentImage: 0,
+		buttonText: "Show Images",
+		buttonColor: "secondary"
 	}
 
 
@@ -26,50 +31,88 @@ class UploadList extends Component {
 		super(props);
 		this.fileLoaderChange = this.fileLoaderChange.bind(this);
 		this.handleDeleteClick = this.handleDeleteClick.bind(this);
-		this.closeLightBox = this.handleDeleteClick.bind(this);
-
+		this.handleLabelChange = this.handleLabelChange.bind(this);
+		this.closeLightbox = this.closeLightbox.bind(this);
+		this.gotoNext = this.gotoNext.bind(this);
+		this.gotoPrevious = this.gotoPrevious.bind(this);
+		this.openLightbox = this.openLightbox.bind(this);
 	}
 
-	closeLightBox(){
-		this.setState({lightboxIsOpen: false});
+	openLightbox () {
+		if(this.state.images.length){
+			this.setState({
+				currentImage: 0,
+				lightboxIsOpen: true,
+			});
+		}else{
+			this.setState({
+				buttonText: "No Images Selected!",
+				buttonColor: "default"});
+			setTimeout(()=>{this.setState({
+				buttonText: "Show Images",
+				buttonColor: "secondary"
+				})}, 2000);
+		}
+
+	}
+	closeLightbox () {
+		this.setState({
+			currentImage: 0,
+			lightboxIsOpen: false
+		});
+	}
+	gotoPrevious () {
+		this.setState({
+			currentImage: this.state.currentImage - 1,
+		});
+	}
+	gotoNext () {
+		this.setState({
+			currentImage: this.state.currentImage + 1,
+		});
 	}
 
+
+	handleLabelChange(event){
+		var images = this.state.images;
+		console.log(event.target.value);
+		images[Number(event.target.name)].caption = event.target.value;
+		this.setState({
+			images: images
+		})
+	}
 
 	addButtonClicked = () =>{
 		document.getElementById('fileLoader').click();
 	}
 
-	handleDeleteClick(idx){
+	handleDeleteClick(event){
 		var images = this.state.images;
-		var imageSources = this.state.imageSources;
-		images.splice(idx, 1);
-		imageSources.splice(idx, 1);
-		this.setState({images: images, imageSources: imageSources})
+		images.splice(event.target.name, 1);
+		this.setState({
+			images: images
+		});
 	}
 
 	fileLoaderChange(event){
 		// var fileLoader = document.getElementById('fileLoader');
 		var fileList = event.target.files;
-		console.log(fileList);
+		// console.log(fileList);
 		var images = this.state.images;
-		var imageSources = this.state.imageSources;
 		for(let i = 0; i < fileList.length; i++){
 			var file = fileList[i]
 			var url = URL.createObjectURL(file);
-			var newImage = {
-				filepath: file.name,
-				label: file.name,
-				url: url
-			}
-			images.push(newImage);
-			imageSources.push({src: url});
-			console.log(imageSources);
+			images.push({
+				src: url,
+				caption: file.name,
+				filepath: file.name
+			});
+			// console.log(images);
 		}
-
+		event.target.value = '';
 		this.setState({
 			images: images,
-			imageSources: imageSources
-		})
+		});
 	}
 
 
@@ -85,15 +128,13 @@ class UploadList extends Component {
 						</ListItemIcon>
 
 						<ListItemText >
-							<Input defaultValue={image.label}/>
+							<Input defaultValue={image.caption} name={idx.toString()} onChange={this.handleLabelChange}/>
 						</ListItemText>
 
 						<ListItemText style={{textAlign: "right"}} primary={image.filepath}>
 						</ListItemText>
 
-						<ListItemSecondaryAction onClick={() =>{
-							this.handleDeleteClick(idx);
-						}}>
+						<ListItemSecondaryAction name={idx.toString()} onClick={this.handleDeleteClick}>
 							<IconButton aria-label="Delete">
 								<DeleteIcon />
 							</IconButton>
@@ -102,18 +143,27 @@ class UploadList extends Component {
 				))}
 			<ListItem button onClick={this.addButtonClicked}>
 				<ListItemIcon>
-					<AddCircle color="primary"/>
+					<AddCircle color="secondary"/>
 				</ListItemIcon>
 				<ListItemText primary="Add Image"/>
 			</ListItem>
 			</List>
 		</Paper>
-		<input type="file" id="fileLoader" style={{display: "none"}} accept="image/*" onChange={this.fileLoaderChange} />
-		<button onClick={()=> this.setState({lightboxIsOpen: true})}></button>
+		<input type="file" id="fileLoader" style={{display: "none"}} accept="image/*" multiple onChange={this.fileLoaderChange} />
+		<div style={{textAlign: "center", margin: "1em"}}>
+			<Button color={this.state.buttonColor} onClick={this.openLightbox} variant="extendedFab">{this.state.buttonText}</Button>
+		</div>
 		<Lightbox
-		  images={this.state.imageSources}
-		  isOpen={this.state.lightboxIsOpen}
-		  onClose={this.closeLightBox}
+			currentImage={this.state.currentImage}
+			images={this.state.images}
+			isOpen={this.state.lightboxIsOpen}
+			onClickNext={this.gotoNext}
+			onClickPrev={this.gotoPrevious}
+			onClose={this.closeLightbox}
+			backdropClosesModal
+			enableKeyboardInput
+			preloadNextImage
+			showImageCount={false}
 		/>
 		</div>
 
