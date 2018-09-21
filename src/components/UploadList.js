@@ -161,6 +161,7 @@ class UploadList extends Component {
 			enableKeyboardInput
 			preloadNextImage
 			showImageCount={false}
+			width={Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 15}
 		/>
 		</div>
 
