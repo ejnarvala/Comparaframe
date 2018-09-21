@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import NavBar from './components/NavBar'
 import Banner from './components/Banner'
-import UploadList from './components/UploadList'
+import ImageListViewer from './components/ImageListViewer'
+
+
 import './App.css';
-		// <UploadGrid size={4}></UploadGrid>
 
 class App extends Component {
-render() {
-	return (
-		<div style={{margin:"4vw"}}>
-		<NavBar></NavBar>
-		<Banner></Banner>
-		<UploadList></UploadList>
-		</div>
-	);
+
+
+	render() {
+		return (
+			<div style={{margin:"4vw"}}>
+				<NavBar/>
+				<Banner/>
+				<ImageListViewer/>
+			</div>
+		);
 	}
 }
 
