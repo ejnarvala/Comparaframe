@@ -21,7 +21,6 @@ const App = (props) => {
           </Typography>
         </Toolbar>
       </AppBar>
-        <div className={classes.toolbar} />
     </div>
   );
 }

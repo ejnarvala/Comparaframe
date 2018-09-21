@@ -11,19 +11,18 @@ class Banner extends Component {
     render(){
     	return(
             <div>
-          <Paper style={{padding: "3em", margin: "1em 5em"}}>
-            <Grid container>
+          <Paper style={{padding: "3em 2em", margin:"3vh auto"}}>
+            <Grid container >
               <Grid item md={6}>
                 <div>
                   <Typography variant="display2" color="inherit" gutterBottom>
-                    Title of a longer featured blog post
+                    Comparaframe
                   </Typography>
                   <Typography variant="headline" color="inherit" paragraph>
-                    Multiple lines of text that form the lede, informing new readers quickly and
-                    efficiently about what&apos;s most interesting in this post&apos;s contents.
+                    This was made on September 19th, 2018 at Georgia Tech for my friend Sup who is really into his media collection.
                   </Typography>
                   <Typography variant="title" color="inherit">
-                    Continue reading...
+                    Hope it works...
                   </Typography>
                 </div>
               </Grid>
