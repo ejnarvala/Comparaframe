@@ -4,13 +4,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Avatar from '@material-ui/core/Avatar';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Typography from '@material-ui/core/Typography';
 import Image from '@material-ui/icons/Image';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper'
-import Divider from '@material-ui/core/Divider';
 import AddCircle from '@material-ui/icons/AddCircle'
 import Input from '@material-ui/core/Input';
 import Lightbox from 'react-images';
@@ -128,7 +125,7 @@ class UploadList extends Component {
 						</ListItemIcon>
 
 						<ListItemText >
-							<Input defaultValue={image.caption} name={idx.toString()} onChange={this.handleLabelChange}/>
+							<Input defaultValue={image.caption} name={idx.toString()} onBlur={this.handleLabelChange}/>
 						</ListItemText>
 
 						<ListItemText style={{textAlign: "right"}} primary={image.filepath}>
