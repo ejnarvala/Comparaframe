@@ -4,8 +4,6 @@ import Banner from './components/Banner'
 import ImageListViewer from './components/ImageListViewer'
 
 
-import './App.css';
-
 class App extends Component {
 
 

@@ -11,6 +11,7 @@ import AddCircle from '@material-ui/icons/AddCircle'
 import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 class UploadList extends Component {
@@ -28,22 +29,24 @@ class UploadList extends Component {
 					<ListItem divider key={idx}>
 						<Avatar src={image.src}/>
 						<ListItemText disableTypography>
-							<Input defaultValue={image.caption} name={idx.toString()} onBlur={this.props.labelChangeHandler}/>
+							<Input style={{lineHeight: "1.4", marginBottom: ".2em"}} defaultValue={image.caption} name={idx.toString()} onBlur={this.props.labelChangeHandler}/>
 							<Typography paragraph variant="body2">{image.filepath}</Typography>
 						</ListItemText>
 
 						<ListItemSecondaryAction onClick={() => {this.props.imageDeleteHandler(idx)}}>
-							<IconButton aria-label="Delete">
-								<DeleteIcon />
-							</IconButton>
+							<Tooltip title="Delete">
+								<IconButton aria-label="Delete">
+									<DeleteIcon />
+								</IconButton>
+							</Tooltip>
 						</ListItemSecondaryAction>
 					</ListItem>
 				))}
 			<ListItem button onClick={this.addButtonClicked}>
 				<ListItemIcon>
-					<AddCircle color="secondary"/>
+					<AddCircle fontSize="large" color="secondary"/>
 				</ListItemIcon>
-				<ListItemText primary="Add Image"/>
+				<ListItemText style={{paddingLeft: 0}} primary="Add Image" primaryTypographyProps={{variant:"button"}}/>
 			</ListItem>
 			</List>
 		</Paper>
