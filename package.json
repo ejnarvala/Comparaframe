@@ -9,6 +9,7 @@
     "gh-pages": "^2.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-dropzone": "^5.1.0",
     "react-images-zoom": "^1.0.7",
     "react-scripts": "1.1.5"
   },

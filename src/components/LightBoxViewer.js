@@ -69,6 +69,7 @@ class LightBoxViewer extends Component{
 			<div>
 			<div>
 			<Lightbox
+				theme={{footer: {fontFamily: 'Roboto'}}}
 				currentImage={this.state.currentImage}
 				images={this.props.images}
 				isOpen={this.state.lightboxIsOpen}
@@ -80,7 +81,6 @@ class LightBoxViewer extends Component{
 				preloadNextImage
 				zoomable={true}
 				onSave={this.props.imageSaveHandler}
-				width={Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 15}
 			/>
 
 			</div>

@@ -35,32 +35,29 @@ class ImageListViewer extends Component {
 		});
 	}
 
-	handleImageAdd(event){
-		var fileList = event.target.files;
+
+	handleImageAdd(fileList){
 		var images = this.state.images;
 		var zoom = this.state.zoom;
-		if(images.length < 10){
-			for(let i = 0; i < fileList.length; i++){
-				var file = fileList[i]
-				var url = URL.createObjectURL(file);
-				images.push({
-					src: url,
-					caption: file.name.split('.')[0],
-					filepath: file.name,
-					initialZoom: zoom
-				});
+		for(let i = 0; i < fileList.length; i++){
+			if(images.length > 9){
+				break;
 			}
-			event.target.value = '';
-			this.setState({
-				images: images,
+			var file = fileList[i]
+			var url = URL.createObjectURL(file);
+			images.push({
+				src: url,
+				caption: file.name.split('.')[0],
+				filepath: file.name,
+				initialZoom: zoom
 			});
-		}else{
-			console.log('too many images!');
 		}
+		this.setState({
+			images: images,
+		});
 	}
 
 	handleImageSave(idx, params){
-		console.log(idx, params);
 		var images = this.state.images;
 		for(let i in images){
 			images[i].initialZoom = params.zoom

@@ -12,18 +12,56 @@ import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
+import Dropzone from 'react-dropzone'
 
 
 class UploadList extends Component {
+	state={
+		dropzoneActive: false
+	}
 
-	addButtonClicked = () =>{
-		document.getElementById('fileLoader').click();
+	onDragEnter() {
+		this.setState({
+			dropzoneActive: true
+		});
+	}
+
+	onDragLeave() {
+		this.setState({
+			dropzoneActive: false
+		});
+	}
+
+	onDrop(files){
+		this.props.imageAddHandler(files);
+		this.setState({dropzoneActive: false})
 	}
 
 	render(){
+		let dropzoneRef;
+		const overlayStyle = {
+			position: 'absolute',
+			top: 0,
+			right: 0,
+			bottom: 0,
+			left: 0,
+			background: 'rgba(0,0,0,0.1)',
+			borderRadius: '5px',
+			color: '#fff'
+		};
 		return(
 		<div>
 		<Paper>
+		<Dropzone
+			ref={(node) => { dropzoneRef = node; }}
+			disableClick
+			style={{position: "relative"}}
+			accept="image/*"
+			onDrop={this.onDrop.bind(this)}
+			onDragEnter={this.onDragEnter.bind(this)}
+			onDragLeave={this.onDragLeave.bind(this)}
+		>
+		{this.state.dropzoneActive && <div style={overlayStyle}></div>}
 			<List>
 				{this.props.images.map((image, idx) => (
 					<ListItem divider key={idx}>
@@ -42,15 +80,15 @@ class UploadList extends Component {
 						</ListItemSecondaryAction>
 					</ListItem>
 				))}
-			<ListItem button onClick={this.addButtonClicked}>
+			<ListItem button onClick={() => {dropzoneRef.open()}}>
 				<ListItemIcon>
 					<AddCircle fontSize="large" color="secondary"/>
 				</ListItemIcon>
 				<ListItemText style={{paddingLeft: 0}} primary="Add Image" primaryTypographyProps={{variant:"button"}}/>
 			</ListItem>
 			</List>
+		</Dropzone>
 		</Paper>
-		<input type="file" id="fileLoader" style={{display: "none"}} accept="image/*" multiple onChange={this.props.imageAddHandler} />
 		</div>
 
 		)}

@@ -33,7 +33,7 @@ class Banner extends Component {
 			  	<Grid item>
 				  	<Typography variant="headline" color="inherit" paragraph>
 						This was made on September 19th, 2018 at Georgia Tech for my friend Sup who is really into his media collection.
-						<br/>This tool allows Sup to add and remove images from a list and view them in a gallary.
+						<br/>This tool allows Sup to add and remove up to 10 images from a list and view them in a gallary.
 						<br/>Sup will be using this to upload screenshots of original and encoded videos to check their quality.
 				  	</Typography>
 			  	</Grid>
