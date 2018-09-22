@@ -75,7 +75,7 @@ class LightBoxViewer extends Component{
 				onClickNext={this.gotoNext}
 				onClickPrev={this.gotoPrevious}
 				onClose={this.closeLightbox}
-				backdropClosesModal
+				backdropClosesModal={true}
 				enableKeyboardInput
 				preloadNextImage
 				zoomable={true}
